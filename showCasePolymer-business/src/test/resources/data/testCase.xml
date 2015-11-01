@@ -1,0 +1,24 @@
+<!DOCTYPE dataset SYSTEM "dataset.dtd">
+<dataset>
+    <table name="FIRST_TABLE">
+        <column>FIRST_COLUMN_NAME</column>
+        <column>SECOND_COLUMN_NAME</column>
+        <column>THIRD_COLUMN_NAME</column>
+        ...
+        <row>
+            <value>1st row value 1st column</value>
+            <value>1st row value 2nd column</value>
+            <value>1st row value 3rd column</value>
+            ...
+        </row>
+        <row>
+            <value>2nd row value 1st column/value>
+            <null />
+            <value>2nd row value 3rd column</value>
+            ...
+        </row>
+    </table>
+    <table name="...">
+        ...
+    </table>
+</dataset>

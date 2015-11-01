@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<context>
+	<!-- Local tomcat mapping file: -->
+	<!-- name = name from web.xml -->
+	<!-- global = definition from global resource from tomcat server.xml-->
+
+	<ResourceLink name="jdbc/showCasePolymer" global="jdbc/showCasePolymer"/>
+</context>

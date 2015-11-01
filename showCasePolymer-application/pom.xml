@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>showCasePolymer</artifactId>
+    <groupId>com.oxit.decathlon</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>showCasePolymer-application</artifactId>
+  <packaging>pom</packaging>
+  <name>showCasePolymer-application</name>
+  <modules>
+    <module>showCasePolymer-server-mvc</module>
+    <module>showCasePolymer-client-web</module>
+    <module>showCasePolymer-application-archive</module>
+  </modules>
+</project>

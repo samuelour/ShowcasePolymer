@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Appenders -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{DATE} %-5p %-50c: %m%n" />
+        </layout>
+    </appender>
+     
+    <appender name="APPLOGFILE" class="org.apache.log4j.RollingFileAppender">
+    	<param name="File"   value="${LOG_ROOT_PATH}/blank/blank.log" />
+    	<param name="Append" value="true" />
+    	<param name="MaxFileSize" value="10000KB" />
+    	<param name="MaxBackupIndex" value="5" />
+    	<layout class="org.apache.log4j.PatternLayout">
+      		<param name="ConversionPattern" value="%d{DATE} %-5p %-50c: %m%n"/>
+    	</layout>
+  	</appender>
+
+    <!-- Application Loggers -->
+    <logger name="com.oxit">
+        <level value="warn" />
+    </logger>
+
+	<!-- 3rdparty Loggers -->
+    <logger name="org.apache.tiles.impl.BasicTilesContainer">
+        <level value="error" />
+    </logger>
+
+    <logger name="org.springframework">
+        <level value="warn" />
+    </logger>
+    
+    <!--  WS logger -->
+    <logger name="org.apache.cxf.interceptor.LoggingOutInterceptor">
+    	<level value="warn" />
+    </logger>
+    <logger name="org.apache.cxf.interceptor.LoggingInInterceptor">
+    	<level value="warn" />
+    </logger>
+ 
+	<!-- display SQL + parameter-->
+ 	<logger name="org.hibernate.SQL">
+ 		<level value="WARN" />
+ 	</logger>   
+    <logger name="org.hibernate.type">
+    	<level value="WARN" />
+    </logger>
+    <logger name="org.hibernate.transaction">
+    	<level value="WARN" />
+    </logger>
+	<logger name="org.hibernate.jdbc">
+		<level value="WARN" />
+	</logger>
+ 	<!-- end display SQL -->
+ 	
+    <!-- Root Logger -->
+    <root>
+        <priority value="warn" />
+        <appender-ref ref="console" />
+    </root>
+
+</log4j:configuration>

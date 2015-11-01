@@ -1,0 +1,16 @@
+<link rel="import" href="../components/bower_components/polymer/polymer.html">
+<link rel="import" href="../components/bower_components/google-youtube/google-youtube.html">
+
+<link rel="import" href="my-translation.html">
+
+<dom-module id="my-video">
+<template>
+	<my-translation context="video" label-code="title" language="FR"></my-translation>
+	<google-youtube video-id="CFmT3UzEcKk"></google-youtube>
+</template>
+<script>
+Polymer({
+	is: "my-video"
+});
+</script>
+</dom-module>

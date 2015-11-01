@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>showCasePolymer-application</artifactId>
+    <groupId>com.oxit.decathlon</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>showCasePolymer-application-archive</artifactId>
+  <packaging>ear</packaging>
+  <name>showCasePolymer-application-archive</name>
+  <build>
+    <extensions>
+      	<extension>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-ftp</artifactId>
+			<version>2.4</version>
+      	</extension>
+    </extensions>
+  	<plugins>
+  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<version>5</version>
+					<workDirectory>${project.build.directory}/${project.artifactId}.ear</workDirectory>
+					<displayName>${deployment.name}</displayName>
+					<description>${project.description}</description>
+					<modules>
+						<webModule>
+							<groupId>com.oxit.decathlon</groupId>
+							<artifactId>showCasePolymer-client-web</artifactId>
+							<uri>showCasePolymer-client-web.war</uri>
+							<contextRoot>/showCasePolymer-client-web</contextRoot>
+						</webModule>
+						<webModule>
+							<groupId>com.oxit.decathlon</groupId>
+							<artifactId>showCasePolymer-server-mvc</artifactId>
+							<uri>showCasePolymer-server-mvc.war</uri>
+							<contextRoot>/showCasePolymer-server-mvc</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+  	</plugins>
+  </build>
+  
+  <properties>
+    <deployment.name>showCasePolymer</deployment.name>
+    <redeploy.version>${project.version}</redeploy.version>
+    
+    <!-- OC4J Configuration -->
+    <!-- You can deploy on several instances. The format is this one: -->
+    <!-- OC4JName@Server1|OC4JName@Server2 -->
+    <!-- <redeploy.instances>OC4JName@Server1</redeploy.instances> -->
+    <!-- <redeploy.pprodInstances>OC4J_xxxx@xxxx01.preprod.org|OC4J_xxxx@xxxx02.preprod.org</redeploy.pprodInstances> -->
+    <!-- <redeploy.environment>integration</redeploy.environment> -->
+    <!-- Decomment the isWeblogicDeployment if your server is a weblogic server -->
+    <!-- <isWeblogicDeployment>true</isWeblogicDeployment> -->
+    
+    <!-- Weblogic configuration Configuration -->
+    <!-- You can deploy on several instances. The format is this one: -->
+    <!-- Server1|Server2 -->
+    <!-- <redeploy.instances>OC4JName@Server1</redeploy.instances> -->
+    <redeploy.pprodInstances>xxxx01.preprod.org:9000|xxxx02.preprod.org:9000</redeploy.pprodInstances>
+    <redeploy.environment>preprod</redeploy.environment>
+    <isWeblogicDeployment>true</isWeblogicDeployment>
+  </properties>
+  
+  <!-- If you want to use automatix / deploy your ear to a FTP server, you can uncomment the following part -->
+  <!-- Note that the login/pass is managed by continuum (user deploy is used) -->
+  <!-- Note that the server must be declared in continuum server and port must be opened -->
+  <!-- To use this : use the 'install' goal, with a properties '-PdeployFTP' -->
+  
+  <!-- 
+  <profiles>
+  	<profile>
+  		<id>deployFTP</id>
+  		<build>  
+  			<plugins>
+  				<plugin>
+      				<groupId>org.codehaus.mojo</groupId>
+      				<artifactId>wagon-maven-plugin</artifactId>
+      				<version>1.0-beta-4</version>
+      				<executions>
+        				<execution>
+          					<id>upload-ear</id>
+          					<phase>install</phase>
+          					<goals>
+            					<goal>upload-single</goal>
+          					</goals>
+          					<configuration>
+          						<serverId>deploy</serverId>
+            					<fromFile>${project.build.directory}/${project.build.finalName}.ear</fromFile>
+            					<url>ftp://xxxxxxxxx.preprod.org</url>
+            					<toFile>/SILVER01/${project.artifactId}-${project.version}.ear</toFile>
+          					</configuration>
+          				</execution>
+        			</executions>
+        		</plugin>
+  			</plugins>
+  		</build>
+  	</profile>
+  </profiles>
+  -->
+  
+  <dependencies>
+    <!-- remove fwk dependencies from ear root file. -->
+    <dependency>
+      <groupId>com.oxit.fwk</groupId>
+      <artifactId>fwk</artifactId>
+      <version>${fwk.version}</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+    <!-- applications to add in the archive file. -->
+    <dependency>
+      <groupId>com.oxit.decathlon</groupId>
+      <artifactId>showCasePolymer-client-web</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>com.oxit.decathlon</groupId>
+      <artifactId>showCasePolymer-server-mvc</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>war</type>
+    </dependency>
+  </dependencies>
+</project>

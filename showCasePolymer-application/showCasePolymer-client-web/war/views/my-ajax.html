@@ -1,0 +1,95 @@
+<link rel="import" href="../components/bower_components/polymer/polymer.html">
+<link rel="import" href="../components/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../components/bower_components/paper-input/paper-input.html">
+<link rel="import" href="../components/bower_components/paper-button/paper-button.html">
+
+<dom-module id="my-ajax">
+<template>
+	<iron-ajax 
+		id="ajaxGet" 
+		method="get"
+		handle-as="json"
+		url="../../showCasePolymer-server-mvc/getUserGetMethod.json" 
+		on-request="submitEvent"
+		on-response="responseEvent"
+		on-error="errorEvent">
+	</iron-ajax>
+	
+	<iron-ajax 
+		id="ajaxPost" 
+		method="post" 
+		handle-as="json"
+		content-type="application/json"
+		url="../../showCasePolymer-server-mvc/getUserPostMethod.json" 
+		on-request="submitEvent"
+		on-response="responseEvent"
+		on-error="errorEvent">
+	</iron-ajax>
+	
+	<paper-input id="name" type="text" label="Name" floatingLabel></paper-input>
+	<paper-input id="surname" type="text" label="Surname" floatingLabel></paper-input>
+	<paper-button raised on-tap="submitGetAjax">Search (method=get, using requestParams)</paper-button>
+	<paper-button raised on-tap="submitPostAjax">Search (method=post, using requestBody)</paper-button>
+	
+	<template is="dom-repeat" items="{{users}}" as="user">
+		<div style="margin-top: 15px">
+			<content>First name: <span>{{user.name}}</span></content>
+			<content>Surname: <span>{{user.surname}}</span></content>
+			<content>Language: <span>{{user.prefLang}}</span></content>
+		</div>
+	</template>
+</template>
+<script>
+Polymer({
+	is: "my-ajax",
+	properties: {
+		objectToGet: {
+			type: Object,
+			value: {
+				name: "",
+				surname: ""
+			}
+		}
+	},
+	submitGetAjax: function (event) {
+		this.objectToGet.name = this.$.name.value;
+		this.objectToGet.surname = this.$.surname.value;
+		
+		this.$.ajaxGet.params = this.objectToGet;
+		this.$.ajaxGet.generateRequest();
+	},
+	submitPostAjax: function (event) {
+		this.objectToGet.name = this.$.name.value;
+		this.objectToGet.surname = this.$.surname.value;
+		
+		this.$.ajaxPost.body = JSON.stringify(this.objectToGet);
+		this.$.ajaxPost.generateRequest();
+	},
+	submitEvent: function (event) {
+		console.log("on request submit ...");
+	},
+	responseEvent: function (event, detail) {
+		this.clear();
+		var response = detail.response;
+		if (response.success) {
+			this.users = response.data;
+		} else {
+			if (response.errors) {
+				var message = "";
+				for (var i = 0; i < response.errors.length; i++) {
+					message = message + response.errors[i].errorMessage + "\r\n";
+				}
+				this.fire('iron-signal', {name: "message-error", data: message});
+			}
+		}
+	},
+	errorEvent: function (event, detail) {
+		this.clear();
+		this.fire('iron-signal', {name: "message-error", data: detail.error});
+	},
+	clear: function () {
+		this.users = null;
+	}
+});
+</script>
+</dom-module>

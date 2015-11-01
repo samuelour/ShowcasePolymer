@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="1.0"
+        xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_1_0.xsd">
+        
+    <description>Db schema for myproject.</description>
+
+<!-- Declare your entities here -->    
+<!--    <entity name="XXX" class="XXX" access="FIELD"></entity>-->
+   <entity name="User" class="com.oxit.decathlon.showCasePolymer.entity.UserEntity" access="FIELD"></entity>
+   <entity name="Language" class="com.oxit.decathlon.showCasePolymer.entity.LanguageEntity" access="FIELD"></entity>
+   <entity name="Translation" class="com.oxit.decathlon.showCasePolymer.entity.TranslationEntity" access="FIELD"></entity>
+
+</entity-mappings>

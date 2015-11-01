@@ -1,0 +1,83 @@
+<link rel="import" href="../components/bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../components/bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../components/bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../components/bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../components/bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../components/bower_components/paper-item/paper-item.html">
+<link rel="import" href="../components/bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../components/bower_components/neon-animation/neon-animation.html">
+
+<link rel="import" href="my-binding.html">
+<link rel="import" href="my-ajax.html">
+<link rel="import" href="my-event.html">
+<link rel="import" href="my-form.html">
+<link rel="import" href="my-video.html">
+<link rel="import" href="my-signals-messenger.html">
+
+<dom-module id="my-main">
+<template>
+	<paper-drawer-panel>
+		<paper-header-panel drawer>
+		<paper-toolbar><h1>ShowCase Project</h1></paper-toolbar>
+			<paper-menu id="menu" selected="{{route}}">
+				<paper-item value="Binding">Binding</paper-item>
+				<paper-item value="Ajax">Ajax</paper-item>
+				<paper-item value="Event">Event</paper-item>
+				<paper-item value="Form">Form</paper-item>
+				<paper-item value="Video">Video</paper-item>
+			</paper-menu>
+		</paper-header-panel>
+		<paper-header-panel main>
+			<paper-toolbar>
+				<paper-icon-button icon="menu" style="color: white;" paper-drawer-toggle></paper-icon-button>
+				<h2>{{title}}</h2>
+	        </paper-toolbar>
+			<neon-animated-pages id="pages" selected="{{route}}" entry-animation="slide-from-right-animation" exit-animation="slide-left-animation">
+				<neon-animatable>
+					<my-binding></my-binding>
+				</neon-animatable>
+				<neon-animatable>
+					<my-ajax></my-ajax>
+				</neon-animatable>
+				<neon-animatable>
+					<my-event></my-event>
+				</neon-animatable>
+				<neon-animatable>
+					<my-form></my-form>
+				</neon-animatable>
+				<neon-animatable>
+					<my-video></my-video>
+				</neon-animatable>
+			</neon-animated-pages>
+		</paper-header-panel>
+	</paper-drawer-panel>
+	
+	<!-- Declarative popup and toast -->
+	<my-signals-messenger></my-signals-messenger>
+	
+</template>
+<script>
+	Polymer({
+		is: "my-main",
+		properties: {
+			route: {
+				observer: "routeChanged"
+			},
+			title: {
+				type: String
+			}
+		},
+		ready: function () {
+			this.route = 0;
+		},
+		routeChanged: function (newIndex, oldIndex) {
+			this.title = this.$.menu.items[newIndex].attributes.value.value;
+		}
+	});
+</script>
+</dom-module>

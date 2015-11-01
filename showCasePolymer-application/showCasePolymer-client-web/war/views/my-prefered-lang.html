@@ -1,0 +1,46 @@
+<link rel="import" href="../components/bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../components/bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../components/bower_components/paper-item/paper-item.html">
+
+<dom-module id="my-prefered-lang">
+<template>
+	<iron-ajax 
+		auto
+		id="ajax"
+		method="post" 
+		handle-as="json"
+		url="../../showCasePolymer-server-mvc/getLanguages.json" 
+		on-request="submitEvent"
+		on-response="responseEvent"
+		on-error="errorEvent">
+	</iron-ajax>
+
+	<paper-dropdown-menu label="Language">
+		<paper-menu class="dropdown-content" attr-for-selected="value" selected="{{selected}}">
+			<template is="dom-repeat" items="{{languages}}" as="language">
+				<paper-item value="{{language.code}}">{{language.libelle}}</paper-item>
+			</template>
+		</paper-menu>
+	</paper-dropdown-menu>
+</template>
+<script>
+Polymer({
+	is: "my-prefered-lang",
+	properties: {
+		selected: {
+			type: String,
+			notify: true
+		}
+	},
+	submitEvent: function (event) {
+	},
+	responseEvent: function (event) {
+		this.languages = event.detail.response.data;
+	},
+	errorEvent: function (event) {
+	}
+});
+</script>
+</dom-module>

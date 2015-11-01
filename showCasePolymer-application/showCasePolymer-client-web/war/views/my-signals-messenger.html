@@ -1,0 +1,38 @@
+<link rel="import" href="../components/bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/bower_components/iron-signals/iron-signals.html">
+
+<link rel="import" href="../components/bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../components/bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../components/bower_components/paper-toast/paper-toast.html">
+
+<dom-module id="my-signals-messenger">
+<template>
+	<paper-toast id="toast" text="{{messageInfo}}"></paper-toast>
+
+	<paper-dialog id="popup" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+		<paper-dialog-scrollable>
+			<div>{{messageError}}</div>
+		</paper-dialog-scrollable>
+		<div class="buttons">
+  				<paper-button dialog-confirm role="button">OK</paper-button>
+  			</div>
+	</paper-dialog>
+
+	<iron-signals on-iron-signal-message-info="messageInfoEvent"></iron-signals>
+	<iron-signals on-iron-signal-message-error="messageErrorEvent"></iron-signals>
+</template>
+<script>
+Polymer({
+	is: "my-signals-messenger",
+	messageInfoEvent: function (e, detail, sender) {
+		this.messageInfo = detail;
+	   	this.$.toast.show();
+	},
+	messageErrorEvent: function (e, detail, sender) {
+		this.messageError = detail;
+		this.$.popup.toggle();
+	}
+});
+</script>
+</dom-module>

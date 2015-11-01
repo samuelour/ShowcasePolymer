@@ -1,0 +1,29 @@
+<link rel="import" href="../components/bower_components/polymer/polymer.html">
+<link rel="import" href="../components/bower_components/paper-input/paper-input.html">
+
+<dom-module id="my-binding">
+<template>
+	<paper-input id="inputBinding" type="text" value="{{dataBinding}}"></paper-input>
+	<div><content>Simple data binding: <span>{{dataBinding}}</span></content></div>
+	<div><content>Script data binding using observer: <span>{{dataScriptBinding}}</span></content></div>
+</template>
+<script>
+Polymer({
+	is: "my-binding",
+	properties: {
+		dataScriptBinding: {
+			type: String,
+			value: ""
+		},
+		dataBinding: {
+			type: String,
+			value: "",
+			observer: "dataChanged"
+		}
+	},
+	dataChanged: function (newValue, oldValue) {
+		this.dataScriptBinding = this.$.inputBinding.value;
+	}
+});
+</script>
+</dom-module>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- Database configuration (HSQL DB in memory) --> 
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        p:driverClassName="org.hsqldb.jdbcDriver" 
+        p:url="jdbc:hsqldb:mem:showCasePolymer"
+        p:username="sa" 
+        p:password="" />
+
+    <!-- persistence unit manager for the test -->
+    <bean id="persistenceUnitManager" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+        <property name="persistenceXmlLocations">
+            <list>
+                <value>classpath:META-INF/persist.xml</value>
+            </list>
+        </property>
+        <property name="defaultDataSource" ref="dataSource" />
+        <property name="dataSources">
+            <map>
+                <!-- key is the datasource declared in your persist.xml -->
+                <entry key="xxx" value-ref="dataSource" />
+            </map>
+        </property>
+    </bean>
+
+    <!-- vendor adapter declaration -->
+    <bean name='hibernateJPAOnHsqlDB' class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="false" />
+        <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+        <!-- better to let jpa generate DDL in this case, else you have to create table manually for your test -->
+        <property name="generateDdl" value="true" />
+    </bean>
+</beans>

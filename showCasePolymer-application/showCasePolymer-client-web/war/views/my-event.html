@@ -1,0 +1,30 @@
+<link rel="import" href="../components/bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/bower_components/iron-signals/iron-signals.html">
+
+<link rel="import" href="../components/bower_components/paper-button/paper-button.html">
+
+<dom-module id="my-event">
+<template>
+	<paper-button raised on-tap="lanuchEvent">Launch</paper-button>
+	<paper-button raised on-tap="clear">Clear</paper-button>
+	<content>{{message}}</content>
+
+	<!-- Works from any place in the project -->
+	<iron-signals on-iron-signal-message="catchEvent"></iron-signals>
+</template>
+<script>
+Polymer({
+	is: "my-event",
+	lanuchEvent: function () {
+		this.fire('iron-signal', {name: "message", data: "event message"});
+	},
+	clear: function () {
+		this.message = "";
+	},
+	catchEvent: function (e, detail, sender) {
+		this.message = detail;
+	}
+});
+</script>
+</dom-module>
